@@ -1,12 +1,12 @@
 # `svelteWeb3`
-A simple, maximally extensible, dependency minimized framework for building modern dApps
+A simple, dependency minimized package for building modern dApps with Svelte
 
-## `⚠️ The library is higly unstable` 
+## `⚠️ The library is highly unstable` 
+`PR are highly appreciated`
 
 ### Projects using `svelteWeb3`
 
 `Open a PR to add your project to the list!`
-
 
 ### Local Development
 
@@ -19,4 +19,4 @@ A simple, maximally extensible, dependency minimized framework for building mode
 - Build and watch for changes\
 `yarn dev`
 
-`🙏 Kudos to https://github.com/NoahZinsmeister, https://github.com/NoahZinsmeister/web3-react`
+### 🙏 Kudos to [NoahZinsmeister](https://github.com/NoahZinsmeister), [web3-react](https://github.com/NoahZinsmeister/web3-react)
