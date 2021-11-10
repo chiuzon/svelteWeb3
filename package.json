@@ -1,6 +1,6 @@
 {
   "name": "@chiuzon/svelteweb3",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -12,6 +12,11 @@
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
     "publish": "npm publish ./package"
   },
+  "keywords": [
+    "etherum",
+    "svelte",
+    "dapps"
+  ],
   "devDependencies": {
     "@ethersproject/bytes": "^5.5.0",
     "@ethersproject/keccak256": "^5.5.0",
@@ -34,8 +39,7 @@
   },
   "type": "module",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "private": false
 }
