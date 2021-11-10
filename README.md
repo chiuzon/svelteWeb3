@@ -4,11 +4,11 @@ A simple, dependency minimized package for building modern dApps with Svelte
 ## `⚠️ The library is highly unstable` 
 `PR are highly appreciated`
 
-### Projects using `svelteWeb3`
+## Projects using `svelteWeb3`
 
 `Open a PR to add your project to the list!`
 
-### Local Development
+## Local Development
 
 - Clone repo\
 `https://github.com/chiuzon/svelteWeb3`
