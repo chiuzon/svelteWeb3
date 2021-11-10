@@ -8,6 +8,12 @@ A simple, dependency minimized package for building modern dApps with Svelte
 
 `Open a PR to add your project to the list!`
 
+## Installation
+``
+    yarn add @chiuzon/svelteweb3 -D
+    yarn dev
+``
+
 ## Local Development
 
 - Clone repo\
