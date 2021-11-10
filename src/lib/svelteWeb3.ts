@@ -132,7 +132,7 @@ async function handleUpdate(update: ConnectorUpdate): Promise<void> {
     })
 
     try {
-        const _chainId = update.chainId !== get(svelteWeb3.chainId) && update.chainId 
+        const _chainId = update.chainId !== get(svelteWeb3.chainId) ? update.chainId : get(svelteWeb3.chainId)
         const chainId = _chainId === undefined ? undefined : normalizeChainId(_chainId)
 
         if(
