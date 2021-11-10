@@ -3,17 +3,20 @@ A simple, maximally extensible, dependency minimized framework for building mode
 
 ## `⚠️ The library is higly unstable` 
 
+### Projects using `svelteWeb3`
+
+`Open a PR to add your project to the list!`
+
+
 ### Local Development
 
-- Clone repo
+- Clone repo\
+`https://github.com/chiuzon/svelteWeb3`
 
-- Install top-level dependencies
+- Install dependencies\
 `yarn`
 
-- Install sub-dependencies
-`yarn bootstrap`
+- Build and watch for changes\
+`yarn dev`
 
-- Build and watch for changes
-`yarn start`
-
-`🙏 Kudos to https://github.com/NoahZinsmeister. This library is inspired from https://github.com/NoahZinsmeister/web3-react`
+`🙏 Kudos to https://github.com/NoahZinsmeister, https://github.com/NoahZinsmeister/web3-react`
