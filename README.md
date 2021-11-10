@@ -6,7 +6,7 @@ A simple, dependency minimized package for building modern dApps with Svelte
 
 ## Projects using `svelteWeb3`
 
-`Open a PR to add your project to the list!`
+`Open a PRs to add your project to the list!`
 
 ## Installation
 ```
