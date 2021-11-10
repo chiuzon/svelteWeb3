@@ -3,6 +3,7 @@ import type { IConnectorUpdate } from './types'
 import { ConnectorEvent } from './types'
 import { EventEmitter } from 'events'
 
+//https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/abstract-connector/src/index.ts
 export abstract class AbstractConnector extends EventEmitter {
     public readonly supportedChainIds?: number[]
 

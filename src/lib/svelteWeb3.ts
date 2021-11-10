@@ -14,6 +14,7 @@ export class UnsupportedChainIdError extends Error {
     }
 }
 
+//https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/manager.ts#L96
 async function parseUpdate(
     connector: AbstractConnector,
     update: ConnectorUpdate
@@ -32,7 +33,6 @@ async function parseUpdate(
   
     return { provider, chainId, account }
 }
-
 
 function createWeb3Store() {
     const web3Store = writable<IWeb3State>({

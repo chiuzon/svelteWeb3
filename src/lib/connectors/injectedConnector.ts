@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+//https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/injected-connector/src/index.ts
 import { AbstractConnector } from "$lib/connectors/abstractConnector";
 import type { IConnectorUpdate } from "./types";
 
