@@ -1,6 +1,7 @@
 import { arrayify } from '@ethersproject/bytes'
 import { keccak256 } from '@ethersproject/keccak256'
 
+// https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/normalizers.ts
 export function normalizeChainId(chainId: string | number): number {
     if (typeof chainId === 'string') {
         // Temporary fix until the next version of Metamask Mobile gets released.
