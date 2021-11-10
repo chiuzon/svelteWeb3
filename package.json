@@ -1,6 +1,6 @@
 {
   "name": "@chiuzon/svelteweb3",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "description": "A simple, dependency minimized package for building modern dApps with Svelte ",
   "author": "Chiuzon (https://twitter.com/chiuzon)",
   "license" : "GPL-3.0 License",
