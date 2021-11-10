@@ -2,11 +2,11 @@
 A simple, dependency minimized package for building modern dApps with Svelte
 
 ## `⚠️ The library is highly unstable` 
-`PR are highly appreciated`
+`PRs are highly appreciated`
 
 ## Projects using `svelteWeb3`
 
-`Open a PRs to add your project to the list!`
+`Open a PR to add your project to the list!`
 
 ## Installation
 ```
