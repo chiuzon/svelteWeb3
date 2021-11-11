@@ -2,7 +2,8 @@ import { derived, writable } from "svelte/store"
 import type { IWeb3Store } from "$lib/types"
 
 
-function web3Store(value) {
+
+function web3Store(value: IWeb3Store) {
     const web3Store = writable<IWeb3Store>(value)
     const connector = derived(web3Store, $state => $state.connector)
     const account = derived(web3Store, $state => $state.account)

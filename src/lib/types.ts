@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { AbstractConnector } from "$lib/connectors/abstractConnector";
+import type { AbstractConnector } from "@web3-react/abstract-connector";
+
+export type FetchLibrarySignature = (provider: any) => any
 
 export interface ConnectorUpdate<T = number | string> {
     provider?: any
@@ -7,7 +9,7 @@ export interface ConnectorUpdate<T = number | string> {
     account?: null | string
 }
 
-export interface IWeb3State<T = any>  {
+export interface IWeb3Store<T = any>  {
     connector?: AbstractConnector,
     library?: T,
     chainId?: number,

@@ -1,5 +1,8 @@
 import { arrayify } from '@ethersproject/bytes'
 import { keccak256 } from '@ethersproject/keccak256'
+import type { AbstractConnector } from '@web3-react/abstract-connector'
+import type { ConnectorUpdate } from '@web3-react/types'
+import { UnsupportedChainIdError } from '$lib/errors'
 
 // https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/normalizers.ts
 export function normalizeChainId(chainId: string | number): number {
@@ -55,4 +58,24 @@ export function normalizeAccount(_address: string): string {
     })()
   
     return addressChecksum
-  }
+}
+
+//https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/manager.ts#L96
+export async function parseUpdate(
+    connector: AbstractConnector,
+    update: ConnectorUpdate
+): Promise<ConnectorUpdate<number>> {
+    const provider = update.provider === undefined ? await connector.getProvider() : update.provider
+    const [_chainId, _account] = (await Promise.all([
+      update.chainId === undefined ? connector.getChainId() : update.chainId,
+      update.account === undefined ? connector.getAccount() : update.account
+    ])) as [Required<ConnectorUpdate>['chainId'], Required<ConnectorUpdate>['account']]
+  
+    const chainId = normalizeChainId(_chainId)
+    if (!!connector.supportedChainIds && !connector.supportedChainIds.includes(chainId)) {
+      throw new UnsupportedChainIdError(chainId, connector.supportedChainIds)
+    }
+    const account = _account === null ? _account : normalizeAccount(_account)
+  
+    return { provider, chainId, account }
+}

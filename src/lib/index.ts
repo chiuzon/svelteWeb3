@@ -1,1 +1,1 @@
-export { svelteWeb3, setFetchLibraryFunc } from '$lib/svelteWeb3'
+export { svelteWeb3 } from '$lib/svelteWeb3'

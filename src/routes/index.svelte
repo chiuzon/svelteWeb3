@@ -1,22 +1,42 @@
 <script lang="ts">
-import { InjectedConnector } from '$lib/connectors/injectedConnector';
+    import { InjectedConnector } from '@web3-react/injected-connector'
+    import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
     import { svelteWeb3 } from '$lib/svelteWeb3'
+    import { onMount } from 'svelte';
 
-    const { account, activate, error, chainId } = svelteWeb3
+    const { account, activate, error, chainId, library } = svelteWeb3()
 
-    const injectedConnector = new InjectedConnector([1, 2])
+    // const injectedConnector = new InjectedConnector({
+    //     supportedChainIds: [1,4]
+    // })
+
+
+    let walletconnect
+
+    walletconnect = new WalletConnectConnector({
+            rpc: { 1: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161" },
+            qrcode: true
+    })
+
+    onMount(async () => {
+       
+    })
 
     const login = async () => {
-       await activate(injectedConnector, async (error) => {
-           console.log(error)
+       await activate(walletconnect, async (error) => {
+            window.location.reload()
        })
     }
-</script>
 
+</script>
 {$error}
 {$account}
+
+<!-- {$error}
+{$account}
 {$chainId}
+-->
 
 <button on:click={login}>
     Connect

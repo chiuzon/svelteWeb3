@@ -2,9 +2,14 @@
    export let fetchLibrary: (provider: any) => any
    
    import { onMount } from 'svelte';
-   import { setFetchLibraryFunc } from '$lib/svelteWeb3'
+   import { svelteWeb3 } from '$lib/svelteWeb3'
 
-   onMount(() => {
+   onMount(async () => {
+      window.global = window;
+      window.Buffer = window.Buffer || await (await import('buffer')).Buffer;
+
+      const { setFetchLibraryFunc } = svelteWeb3()
+
       setFetchLibraryFunc(fetchLibrary)
    })
 </script>

@@ -1,49 +1,26 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-import type { AbstractConnector } from "$lib/connectors/abstractConnector"
-import { ConnectorEvent } from "$lib/connectors/types"
-import type { ConnectorUpdate, IWeb3State } from "./types"
-import { derived, get, writable } from "svelte/store"
+import type { AbstractConnector } from '@web3-react/abstract-connector'
+import type { ConnectorUpdate } from "./types"
 
-import { normalizeAccount, normalizeChainId } from "$lib/normalizers"
+import { ConnectorEvent } from '@web3-react/types'
+import { get } from "svelte/store"
 import { UnsupportedChainIdError } from "$lib/errors";
+import web3Store from '$lib/web3Store'
+import libraryStore from '$lib/libraryStore'
+import { parseUpdate, normalizeChainId } from '$lib/utils'
 
-//https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/manager.ts#L96
-async function parseUpdate(
-    connector: AbstractConnector,
-    update: ConnectorUpdate
-): Promise<ConnectorUpdate<number>> {
-    const provider = update.provider === undefined ? await connector.getProvider() : update.provider
-    const [_chainId, _account] = (await Promise.all([
-      update.chainId === undefined ? connector.getChainId() : update.chainId,
-      update.account === undefined ? connector.getAccount() : update.account
-    ])) as [Required<ConnectorUpdate>['chainId'], Required<ConnectorUpdate>['account']]
-  
-    const chainId = normalizeChainId(_chainId)
-    if (!!connector.supportedChainIds && !connector.supportedChainIds.includes(chainId)) {
-      throw new UnsupportedChainIdError(chainId, connector.supportedChainIds)
-    }
-    const account = _account === null ? _account : normalizeAccount(_account)
-  
-    return { provider, chainId, account }
-}
+const fetchLibraryStore = libraryStore()
+const svelteWeb3Store = web3Store({
+    connector: undefined,
+    library: undefined,
+    chainId: undefined,
+    account: undefined,
+    active: undefined,
+    error: undefined
+})
 
-function createWeb3Store() {
-    const web3Store = writable<IWeb3State>({
-        connector: undefined,
-        library: undefined,
-        chainId: undefined,
-        account: undefined,
-        active: undefined,
-        error: undefined
-    })
+function svelteWeb3() {
 
-    const connector = derived(web3Store, $state => $state.connector)
-    const library = derived(web3Store, $state => $state.library)
-    const chainId = derived(web3Store, $state => $state.chainId)
-    const account = derived(web3Store, $state => $state.account)
-    const active = derived(web3Store, $state => $state.active)
-    const error = derived(web3Store, $state => $state.error)
-    
     async function activate(
         web3Connector: AbstractConnector, 
         onError?: (error: Error) => void,
@@ -51,27 +28,23 @@ function createWeb3Store() {
     ): Promise<void> {
         let activated = false
 
-     try {
-        const connectorUpdate = await web3Connector.activate().then((update) => {
-            activated = true
+        try {
+            const connectorUpdate = await web3Connector.activate().then((update) => {
+                activated = true
+                return update
+            })
 
-            return update
-        })
-
-        const parsedUpdate = await parseUpdate(web3Connector, connectorUpdate)
-
-        console.log(parsedUpdate)
-
-        web3Store.set({
-            connector: web3Connector,
-            library: get(fetchLibraryFunc)(parsedUpdate.provider),
-            chainId: parsedUpdate.chainId,
-            account: parsedUpdate.account,
-            active: web3Connector !== undefined && parsedUpdate !== undefined && parsedUpdate.account !== undefined,
-            error: null
-        })
-
-        }catch(error) {
+            const parsedUpdate = await parseUpdate(web3Connector, connectorUpdate)
+            
+            svelteWeb3Store.set({
+                connector: web3Connector,
+                library: get(fetchLibraryStore)(parsedUpdate.provider),
+                chainId: parsedUpdate.chainId,
+                account: parsedUpdate.account,
+                active: web3Connector !== undefined && parsedUpdate !== undefined && parsedUpdate.account !== undefined,
+                error: null
+            })
+        } catch(error) {
             if(onError){
                 activated && web3Connector.deactivate()
                 onError(error)
@@ -79,114 +52,97 @@ function createWeb3Store() {
                 activated && web3Connector.deactivate()
                 throw error
             }else{
-                clear()
+                svelteWeb3Store.clear()
             }
-        }
-}
+        }   
+    }
 
-    function clear() {
-        web3Store.set({
-            connector: null,
-            library: null,
-            chainId: null,
-            account: null,
-            active: null,
-            error: null
-        })
+    function deactivate() {
+        svelteWeb3Store.clear()
     }
 
     return {
-        clear,
+        setFetchLibraryFunc: fetchLibraryStore.setLibrary,
+        
+        connector: svelteWeb3Store.connector,
+        library: svelteWeb3Store.library,
+        account: svelteWeb3Store.account,
+        chainId: svelteWeb3Store.chainId,
+        active: svelteWeb3Store.active,
+        error: svelteWeb3Store.error,
+        
         activate,
-
-        connector,
-        library,
-        chainId,
-        account,
-        active,
-        error,
-
-        ...web3Store
+        deactivate
     }
 }
 
-const fetchLibraryFunc = writable<(provider: any) => any>()
-const svelteWeb3 = createWeb3Store()
-
-function setFetchLibraryFunc (libraryFunc: (provider: any) => any): void {
-    fetchLibraryFunc.set(libraryFunc)
+function onDeactivate() {
+    svelteWeb3Store.clear()
 }
 
-async function handleUpdate(update: ConnectorUpdate): Promise<void> {
-    
-    svelteWeb3.update((prev) => {
-        prev.error = null
-        return prev
-    })
-
-    try {
-        const _chainId = update.chainId !== get(svelteWeb3.chainId) ? update.chainId : get(svelteWeb3.chainId)
-        const chainId = _chainId === undefined ? undefined : normalizeChainId(_chainId)
-
-        if(
-            chainId !== undefined &&
-            !!get(svelteWeb3.connector).supportedChainIds && 
-            !get(svelteWeb3.connector).supportedChainIds.includes(chainId)
-        ){
-            const error = new UnsupportedChainIdError(chainId, get(svelteWeb3).connector.supportedChainIds)
-
-            svelteWeb3.update((prev) => {
-                prev.chainId = -1
-                prev.error = error
-                return prev
-            })
-        } else {
-            if(update.account){
-                const _account = update.account !== get(svelteWeb3.account) ? update.account : get(svelteWeb3.account)
-                const account = typeof _account === 'string' ? _account : normalizeAccount(update.account)
-
-                svelteWeb3.update((prev) => {
-                    prev.account = account
-                    return prev
-                })
-            }
-
-            if(chainId){
-                svelteWeb3.update((prev) => {
-                    prev.chainId = chainId
-                    return prev
-                })
-            }
-        }
-    }catch(e){
-        console.error(e)
-    }
-}
-
-function handleDeactivate() {
-    svelteWeb3.clear()
-}
-
-function handleError(error: Error) {
-    svelteWeb3.update((prev) => {
+function onError(error: Error) {
+    svelteWeb3Store.update((prev) => {
         prev.error = error
         return prev
     })
 }
 
-svelteWeb3.connector.subscribe((self) => {
-    if(self){
-       self.eventNames().includes(ConnectorEvent.Update) && self.off(ConnectorEvent.Update, handleUpdate)
-       self.eventNames().includes(ConnectorEvent.Deactivate) && self.off(ConnectorEvent.Deactivate, handleDeactivate)
-       self.eventNames().includes(ConnectorEvent.Error) && self.off(ConnectorEvent.Error, handleError)
-        
-    }
+async function onUpdate(update: ConnectorUpdate) {
+  
+    if(!get(svelteWeb3Store.error)){
+        const chainId = update.chainId === undefined ? undefined : normalizeChainId(update.chainId)
 
+        if (chainId !== undefined && 
+            !!get(svelteWeb3Store.connector).supportedChainIds && 
+            !get(svelteWeb3Store.connector).supportedChainIds.includes(chainId)
+        ) {
+            const error = new UnsupportedChainIdError(chainId, get(svelteWeb3Store.connector).supportedChainIds)
+            onError(error)
+
+            svelteWeb3Store.update((prev) => {
+                prev.account = undefined
+                return prev;
+            })
+        } else {
+            // const account = typeof update.account === 'string' ? normalizeAccount(update.account) : update.account
+            const parsedUpdate = await parseUpdate(get(svelteWeb3Store.connector), update)
+
+            svelteWeb3Store.update((prev) => {
+                prev.chainId = parsedUpdate.chainId
+                prev.account = parsedUpdate.account
+                return prev;
+            })
+        }
+    }else{
+        try {
+            const parsedUpdate = await parseUpdate(get(svelteWeb3Store.connector), update)
+
+            svelteWeb3Store.update((prev) => {
+                prev.library = get(fetchLibraryStore)(parsedUpdate.provider)
+                prev.chainId = parsedUpdate.chainId
+                prev.account = parsedUpdate.account
+                prev.error = undefined
+                return prev;
+            })
+
+        } catch (error){
+            onError(error)
+        }
+    }
+}
+
+svelteWeb3Store.connector.subscribe((self) => {
     if(self){
-        self.on(ConnectorEvent.Update, handleUpdate)
-        self.on(ConnectorEvent.Deactivate, handleDeactivate)
-        self.on(ConnectorEvent.Error, handleError)
+        self.eventNames().includes(ConnectorEvent.Update) && self.off(ConnectorEvent.Update, onUpdate)
+        self.eventNames().includes(ConnectorEvent.Deactivate) && self.off(ConnectorEvent.Deactivate, onDeactivate)
+        self.eventNames().includes(ConnectorEvent.Error) && self.off(ConnectorEvent.Error, onError)           
+    }
+        
+    if(self){
+        self.on(ConnectorEvent.Update, onUpdate)
+        self.on(ConnectorEvent.Deactivate, onDeactivate)
+        self.on(ConnectorEvent.Error, onError)
     }
 })
 
-export { svelteWeb3, setFetchLibraryFunc }
+export { svelteWeb3 }
