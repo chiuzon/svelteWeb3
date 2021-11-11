@@ -5,14 +5,7 @@ import type { ConnectorUpdate, IWeb3State } from "./types"
 import { derived, get, writable } from "svelte/store"
 
 import { normalizeAccount, normalizeChainId } from "$lib/normalizers"
-
-export class UnsupportedChainIdError extends Error {
-    public constructor(unsupportedChainId: number, supportedChainIds?: readonly number[]) {
-      super()
-      this.name = this.constructor.name
-      this.message = `Unsupported chain id: ${unsupportedChainId}. Supported chain ids are: ${supportedChainIds}.`
-    }
-}
+import { UnsupportedChainIdError } from "$lib/errors";
 
 //https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/manager.ts#L96
 async function parseUpdate(
