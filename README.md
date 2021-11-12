@@ -11,6 +11,8 @@ A simple, dependency minimized package for building modern dApps with Svelte
 `Open a PR to add your project to the list!`
 
 ## Installation
+Be sure to have installed `buffer` `@web3-react/types` and an `@web3-react` connector 
+
 ```
     yarn add @chiuzon/svelteweb3 -D
     yarn dev
