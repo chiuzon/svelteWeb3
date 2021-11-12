@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 import type { AbstractConnector } from '@web3-react/abstract-connector'
-import type { ConnectorUpdate } from "./types"
+import type { ConnectorUpdate } from '@web3-react/types'
 
 import { ConnectorEvent } from '@web3-react/types'
 import { get } from "svelte/store"

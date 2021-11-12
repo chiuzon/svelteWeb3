@@ -8,7 +8,8 @@
     "etherum",
     "svelte",
     "dapps",
-    "web3"
+    "web3",
+    "svelteweb3"
   ],
   "repository": {
     "type": "git",
@@ -56,8 +57,5 @@
     "svelte2tsx": "^0.4.8",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
-  },
-  "dependencies": {
-    "@walletconnect/client": "^2.0.0-beta.20"
   }
 }
