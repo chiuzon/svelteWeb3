@@ -1,6 +1,8 @@
 # `svelteWeb3`
 A simple, dependency minimized package for building modern dApps with Svelte
 
+## `⛔ The library isn't fully compatible with Svelte SPA or Sapper. But it should be compatible to SvelteKit.`
+
 ## `⚠️ The library is highly unstable` 
 `PRs are highly appreciated`
 
