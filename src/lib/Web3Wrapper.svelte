@@ -5,9 +5,8 @@
    import { svelteWeb3 } from '$lib/svelteWeb3'
 
    onMount(async () => {
-      if(!window.Buffer){
-         window.Buffer = window.Buffer || await (await import('buffer')).Buffer;
-      }
+      !(window as any)['global'] && ((window as any)['global'] = window)
+      !window.Buffer && (window.Buffer = window.Buffer || await (await import('buffer')).Buffer)
 
       const { setFetchLibraryFunc } = svelteWeb3()
 
