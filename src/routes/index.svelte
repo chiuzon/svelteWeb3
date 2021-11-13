@@ -7,9 +7,9 @@
 
     const { account, activate, error, chainId, library } = svelteWeb3()
 
-    // const injectedConnector = new InjectedConnector({
-    //     supportedChainIds: [1,4]
-    // })
+    const injectedConnector = new InjectedConnector({
+        supportedChainIds: [1,3]
+    })
 
 
     let walletconnect
@@ -24,7 +24,7 @@
     })
 
     const login = async () => {
-       await activate(walletconnect, async (error) => {
+       await activate(injectedConnector, async (error) => {
             window.location.reload()
        })
     }

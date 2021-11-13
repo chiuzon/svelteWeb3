@@ -36,9 +36,15 @@ function svelteWeb3() {
 
             const parsedUpdate = await parseUpdate(web3Connector, connectorUpdate)
             
+            const fetchLibraryFunc = get(fetchLibraryStore)
+
+            if(!fetchLibraryFunc){
+                onError(new Error("fetchLibrary isn't set"))
+            }
+
             svelteWeb3Store.set({
                 connector: web3Connector,
-                library: get(fetchLibraryStore)(parsedUpdate.provider),
+                library: fetchLibraryFunc(parsedUpdate.provider),
                 chainId: parsedUpdate.chainId,
                 account: parsedUpdate.account,
                 active: web3Connector !== undefined && parsedUpdate !== undefined && parsedUpdate.account !== undefined,
