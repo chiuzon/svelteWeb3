@@ -6,10 +6,10 @@ import { ConnectorEvent } from '@web3-react/types'
 import { get } from "svelte/store"
 import { UnsupportedChainIdError } from "$lib/errors";
 import web3Store from '$lib/web3Store'
-import libraryStore from '$lib/libraryStore'
+import libraryFunc from '$lib/_libraryStore'
 import { parseUpdate, normalizeChainId } from '$lib/utils'
+import type { FetchLibrarySignature } from './types';
 
-const fetchLibraryStore = libraryStore()
 const svelteWeb3Store = web3Store({
     connector: undefined,
     library: undefined,
@@ -36,7 +36,7 @@ function svelteWeb3() {
 
             const parsedUpdate = await parseUpdate(web3Connector, connectorUpdate)
             
-            const fetchLibraryFunc = get(fetchLibraryStore)
+            const fetchLibraryFunc = get(libraryFunc)
 
             if(!fetchLibraryFunc){
                 const error = new Error("fetchLibrary isn't set")
@@ -68,9 +68,7 @@ function svelteWeb3() {
         svelteWeb3Store.clear()
     }
 
-    return {
-        setFetchLibraryFunc: fetchLibraryStore.setLibrary,
-        
+    return { 
         connector: svelteWeb3Store.connector,
         library: svelteWeb3Store.library,
         account: svelteWeb3Store.account,
@@ -125,7 +123,7 @@ async function onUpdate(update: ConnectorUpdate) {
             const parsedUpdate = await parseUpdate(get(svelteWeb3Store.connector), update)
 
             svelteWeb3Store.update((prev) => {
-                prev.library = get(fetchLibraryStore)(parsedUpdate.provider)
+                prev.library = get(libraryFunc)(parsedUpdate.provider)
                 prev.chainId = parsedUpdate.chainId
                 prev.account = parsedUpdate.account
                 prev.error = undefined
@@ -152,4 +150,13 @@ svelteWeb3Store.connector.subscribe((self) => {
     }
 })
 
-export { svelteWeb3 }
+async function initSvelteWeb3(fetchLibrary: FetchLibrarySignature, useFixers = true): Promise<void> {
+    if(useFixers){
+        !(window as any)['global'] && ((window as any)['global'] = window)
+        !window.Buffer && (window.Buffer = window.Buffer || await (await import('buffer')).Buffer)
+    }
+
+    libraryFunc.setLibrary(fetchLibrary)
+}
+
+export { svelteWeb3, initSvelteWeb3 }

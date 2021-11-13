@@ -1,7 +1,7 @@
 import { writable } from "svelte/store"
 import type { FetchLibrarySignature } from "$lib/types"
 
-function libraryStore(){
+function libraryFuncStore(){
     const {set, subscribe} = writable<FetchLibrarySignature>(null)
 
     function setLibrary(func: FetchLibrarySignature) {
@@ -14,5 +14,7 @@ function libraryStore(){
     }
 }
 
+const libraryFunc = libraryFuncStore()
 
-export default libraryStore
+export default libraryFunc
+// export default 
