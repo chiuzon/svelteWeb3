@@ -10,6 +10,8 @@ A simple, dependency minimized package for building modern dApps with Svelte
 
 `Open a PR to add your project to the list!`
 
+[svelte-vite-svelteweb3](https://github.com/chiuzon/svelte-vite-svelteweb3)
+
 ## Installation
 Be sure to have installed `buffer` `@web3-react/types` and an `@web3-react` connector 
 
