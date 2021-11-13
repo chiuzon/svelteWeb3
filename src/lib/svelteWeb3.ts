@@ -39,7 +39,8 @@ function svelteWeb3() {
             const fetchLibraryFunc = get(fetchLibraryStore)
 
             if(!fetchLibraryFunc){
-                onError(new Error("fetchLibrary isn't set"))
+                const error = new Error("fetchLibrary isn't set")
+                onError && onError(error)
             }
 
             svelteWeb3Store.set({
