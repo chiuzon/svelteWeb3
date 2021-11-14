@@ -11,6 +11,7 @@ A simple, dependency minimized package for building modern dApps with Svelte
 `Open a PR to add your project to the list!`
 
 [svelte-vite-svelteweb3](https://github.com/chiuzon/svelte-vite-svelteweb3)
+[sveltekit-svelteweb3](https://github.com/chiuzon/sveltekit-svelteweb3)
 
 ## Installation
 Be sure to have installed `buffer` `@web3-react/types` and an `@web3-react` connector 
@@ -32,3 +33,7 @@ Be sure to have installed `buffer` `@web3-react/types` and an `@web3-react` conn
 `yarn dev`
 
 ### 🙏 Kudos to [NoahZinsmeister](https://github.com/NoahZinsmeister), [web3-react](https://github.com/NoahZinsmeister/web3-react)
+
+```
+⚠️ The address that you receive from the $account store isn't checksumed by default
+```
