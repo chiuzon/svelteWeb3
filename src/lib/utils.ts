@@ -23,7 +23,6 @@ export function normalizeChainId(chainId: string | number): number {
     }
 }
 
-
 //https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/manager.ts#L96
 export async function parseUpdate(
     connector: AbstractConnector,

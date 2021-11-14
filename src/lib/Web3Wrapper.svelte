@@ -1,22 +1,21 @@
 <script lang="ts">
+   import type { FetchLibrarySignature } from '$lib/types'
    import { onMount } from 'svelte';
    import libraryFunc from '$lib/_libraryStore'
-   import type { FetchLibrarySignature } from '$lib/types'
+   import { initSvelteWeb3 } from '$lib/svelteWeb3';
 
    export let fetchLibrary: FetchLibrarySignature
 
    onMount(async () => {
-      !(window as any)['global'] && ((window as any)['global'] = window)
-      !window.Buffer && (window.Buffer = window.Buffer || await (await import('buffer')).Buffer)
-      
-      if(fetchLibrary){
-         libraryFunc.setLibrary(fetchLibrary)
-      }else{
+      if(!fetchLibrary){
          console.error("fetchLibrary isn't set")
+         return
       }
+
+      initSvelteWeb3(fetchLibrary)
    })
 
-   $: libraryFunc.setLibrary(fetchLibrary)
+   $: fetchLibrary && libraryFunc.setLibrary(fetchLibrary)
 </script>
 
 <slot />
