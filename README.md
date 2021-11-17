@@ -10,8 +10,9 @@ A simple, dependency minimized package for building modern dApps with Svelte
 
 `Open a PR to add your project to the list!`
 
-[svelte-vite-svelteweb3](https://github.com/chiuzon/svelte-vite-svelteweb3)
-[sveltekit-svelteweb3](https://github.com/chiuzon/sveltekit-svelteweb3)
+- [svelte-vite-svelteweb3](https://github.com/chiuzon/svelte-vite-svelteweb3)
+- [sveltekit-svelteweb3](https://github.com/chiuzon/sveltekit-svelteweb3)
+- [airdroper-dapp](https://github.com/chiuzon/airdroper-dapp)
 
 ## Installation
 Be sure to have installed `buffer` `@web3-react/types` and an `@web3-react` connector 
