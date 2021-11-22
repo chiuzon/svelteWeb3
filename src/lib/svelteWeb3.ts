@@ -18,7 +18,7 @@ export class UnsupportedChainIdError extends Error {
 }
 
 // https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/normalizers.ts
-export function normalizeChainId(chainId: string | number): number {
+function normalizeChainId(chainId: string | number): number {
     if (typeof chainId === 'string') {
         // Temporary fix until the next version of Metamask Mobile gets released.
         // In the current version (0.2.13), the chainId starts with “Ox” rather
@@ -38,7 +38,7 @@ export function normalizeChainId(chainId: string | number): number {
 }
 
 //https://github.com/NoahZinsmeister/web3-react/blob/v6/packages/core/src/manager.ts#L96
-export async function parseUpdate(
+async function parseUpdate(
     connector: AbstractConnector,
     update: ConnectorUpdate
 ): Promise<ConnectorUpdate<number>> {
@@ -66,6 +66,7 @@ const svelteWeb3Store = web3Store({
     error: undefined
 })
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function svelteWeb3() {
 
     async function activate(
