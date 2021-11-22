@@ -9,7 +9,9 @@
     "svelte",
     "dapps",
     "web3",
-    "svelteweb3"
+    "svelteweb3",
+    "walletconnect",
+    "injected"
   ],
   "repository": {
     "type": "git",
