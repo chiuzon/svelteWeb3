@@ -17,4 +17,3 @@ function libraryFuncStore(){
 const libraryFunc = libraryFuncStore()
 
 export default libraryFunc
-// export default 
