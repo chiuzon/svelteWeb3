@@ -12,6 +12,8 @@ A simple, dependency minimized package for building modern dApps with Svelte
 - [sveltekit-svelteweb3](https://github.com/chiuzon/sveltekit-svelteweb3)
 - [airdroper-dapp](https://github.com/chiuzon/airdroper-dapp)
 
+## [Documentation](https://github.com/chiuzon/svelteWeb3/wiki)
+
 ## Local Development
 
 - Clone repo\
