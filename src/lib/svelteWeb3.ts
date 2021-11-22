@@ -4,7 +4,6 @@ import type { ConnectorUpdate } from '@web3-react/types'
 import type { FetchLibrarySignature } from './types';
 
 import { get } from "svelte/store"
-
 import { ConnectorEvent } from '@web3-react/types'
 
 import web3Store from '$lib/web3Store'

@@ -11,10 +11,6 @@ const config = {
 		target: '#svelte',
 		vite: {
 			plugins: [
-				// nodeResolve({
-				// 	browser:true,
-				// 	preferBuiltins: false
-				// })
 			]
         }
 	}
