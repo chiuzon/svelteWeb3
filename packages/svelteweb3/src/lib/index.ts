@@ -1,0 +1,1 @@
+export { default as Web3Provider} from '$lib/Web3Provider.svelte'
