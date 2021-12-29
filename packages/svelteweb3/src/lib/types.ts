@@ -6,6 +6,7 @@ export type GetLibSig = (provider: unknown) => Web3Provider
 export interface IWeb3Store {
   connector: AbstractConnector,
   library: Web3Provider,
+  libraryFunc: GetLibSig,
   chainId: number,
   account: null | string,
   active: boolean,
