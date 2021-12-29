@@ -29,9 +29,9 @@ function init(getLibrary: GetLibSig): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   !(window as any)['global'] && ((window as any)['global'] = window)
   !window.Buffer && (async () => {
-    window.Buffer = window.Buffer || await (await (import('buffer'))).Buffer   
+    window.Buffer = window.Buffer || (await import('buffer')).Buffer   
   })()
-  
+
   getLibraryStore.set(getLibrary)
 }
 
