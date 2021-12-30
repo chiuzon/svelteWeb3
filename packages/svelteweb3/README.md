@@ -1,38 +1,64 @@
-# create-svelte
+# `svelteWeb3`
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+A simple, dependency minimized package for building modern dApps with Svelte
 
-## Creating a project
+## ⚠️ Warning 0.3.0
+After 0.3.0 version we don't do any polyfills for the `web3-react` connectors, the `injected-connector` works without any polyfills but packages like `walletconnect-connector` might require `buffer` polyfill.\
 
-If you're seeing this, you've probably already done this step. Congrats!
+For some connectors you might be required to disable `ssr`
 
-```bash
-# create a new project in the current directory
-npm init svelte@next
+### Projects using `svelteWeb3`
 
-# create a new project in my-app
-npm init svelte@next my-app
+`Open a PR to add your project to the list!`
+
+
+## Instalation
+
+`pnpm install @chiuzon/svelteweb3`
+
+## Usage
+
+```js
+//store.js
+import { createWeb3Store } from '@chiuzon/svelteweb3'
+
+//You can have any number of Web3Store
+export const web3Store = createWeb3Store((provider) => {
+  return new ethers.providers.Web3Provider(provider)
+})
 ```
 
-> Note: the `@next` is temporary
+```svelte
+//index.svelte
+<script>
+  import { web3Store } from './store.js'
+  import { InjectedConnector } from '@web3-react/injected-connector'
 
-## Developing
+  const injectedConnector = new InjectedConnector({supportedChainIds: [1]})
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+  const {account, activate} = web3Store
 
-```bash
-npm run dev
+  async function onConnectHandle() {
+    await activate(injectedConnector, (error) => {
+      console.error(error)
+    })
+  }
+</script>
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+Account Address: {$account}
+
+<button on:click={() => {
+  onConnectHandle()
+}}>Connect</button>
 ```
 
-## Building
+## Local Development
 
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
+- Clone repo\
+`https://github.com/chiuzon/svelteWeb3`
 
-```bash
-npm run build
-```
+- Install dependencies\
+`pnpm install`
 
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+- Build and watch for changes\
+`pnpm dev`
