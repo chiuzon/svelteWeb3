@@ -11,8 +11,8 @@
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
     "rmdir": "node -e \"var fs = require('fs'); process.argv.slice(1).map((fpath) => fs.rmdirSync(fpath, { recursive: true })); process.exit(0);\"",
-    "prepublish": "start pnpm run rmdir && start pnpm package",
-    "publish": "publish ./package"
+    "prepublish": "start pnpm rmdir ./package && start pnpm package",
+    "publish": "start pnpm publish ./package"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.5.1",
