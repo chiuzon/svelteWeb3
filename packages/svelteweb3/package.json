@@ -1,6 +1,13 @@
 {
   "name": "@chiuzon/svelteweb3",
-  "version": "0.4.0",
+  "description": "A simple, dependency minimized package for building modern dApps with SvelteKit",
+  "version": "0.4.2",
+  "keywords": [
+    "svelte", "sveltekit", "web3", "svelteweb3", "web3provider", "web3connector"
+  ],
+  "repository": {
+    "url": "https://github.com/chiuzon/svelteWeb3"
+  },
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
