@@ -10,7 +10,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-    "prepublish": "pnpm run package"
+    "prepublishOnly": "pnpm run package"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.5.1",
