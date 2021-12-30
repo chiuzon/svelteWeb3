@@ -4,13 +4,15 @@
 
   const injectedConnector = new InjectedConnector({ supportedChainIds: [1]})
 
-  const {active, account , activate, deactivate, error} = web3Store
+  const {active, account , activate, deactivate, error, library} = web3Store
 
   const connectButton = async () => {
     await activate(injectedConnector, (error) => {
       console.log(error)
     })
   }
+
+  $: console.log($library)
 </script>
 
 <h1>Hello</h1>

@@ -23,28 +23,20 @@ export const createWeb3Store = (getLibraryFunc: GetLibSig): {
     throw new InvalidGetLibraryFunctionError();
   }
 
-  const initialValues: IWeb3Store = {
-    connector: undefined,
-    libraryFunc: getLibraryFunc,
-    library: undefined,
-    account: null,
-    chainId: 0,
-    active: false,
-    error: null
-  };
+  const initialValues = (): IWeb3Store => {
+    return {
+      connector: undefined,
+      libraryFunc: getLibraryFunc,
+      library: undefined,
+      account: null,
+      chainId: 0,
+      active: false,
+      error: null
+    }
+  }
 
-  const store = writable<IWeb3Store>(initialValues);
+  const store = writable<IWeb3Store>(initialValues());
   const {set, update} = store
-
-  const resetStore = () => set({
-    connector: undefined,
-    libraryFunc: getLibraryFunc,
-    library: undefined,
-    account: null,
-    chainId: 0,
-    active: false,
-    error: null
-  })
 
   const connector = derived(store, ($store) => $store.connector);
   const library = derived(store, ($store) => $store.library);
@@ -85,14 +77,14 @@ export const createWeb3Store = (getLibraryFunc: GetLibSig): {
         activated && connector.deactivate()
         throw error
       }else{
-        resetStore()
+        set(initialValues())
       }
     }
   }
 
   const deactivate = () => { 
     get(store).connector?.deactivate()
-    resetStore() 
+    set(initialValues())
   }
 
   const onError = (error: Error) => update((prev) => {
@@ -144,7 +136,7 @@ export const createWeb3Store = (getLibraryFunc: GetLibSig): {
       }
   }
 
-  const onDeactivate = () => resetStore()
+  const onDeactivate = () => set(initialValues())
 
   store.subscribe(({connector}) => {
     if(connector){
