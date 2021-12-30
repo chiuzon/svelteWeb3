@@ -1,9 +1,5 @@
-.turbo
-.next/**
-dist/**
-build/**
-node_modules/**
 .DS_Store
+node_modules
 /build
 /.svelte-kit
 /package

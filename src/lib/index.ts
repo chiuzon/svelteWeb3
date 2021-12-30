@@ -1,1 +1,0 @@
-export { svelteWeb3, initSvelteWeb3 } from '$lib/svelteWeb3'

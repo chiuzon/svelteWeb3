@@ -1,16 +1,15 @@
 # `svelteWeb3`
 
-A simple, dependency minimized package for building modern dApps with Svelte
+A simple, dependency minimized package for building modern dApps with SvelteKit
 
 ## ⚠️ Warning 0.3.0
-After 0.3.0 version we don't do any polyfills for the `web3-react` connectors, the `injected-connector` works without any polyfills but packages like `walletconnect-connector` might require `buffer` polyfill.\
+After 0.3.0 version we don't do any polyfills for the `web3-react` connectors, the `injected-connector` works without any polyfills but packages like `walletconnect-connector` might require `buffer` polyfill.
 
 For some connectors you might be required to disable `ssr`
 
 ## Projects using `svelteWeb3`
 
 `Open a PR to add your project to the list!`
-
 
 ## Installation
 
