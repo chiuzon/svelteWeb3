@@ -12,7 +12,7 @@ For some connectors you might be required to disable `ssr`
 `Open a PR to add your project to the list!`
 
 
-## Instalation
+## Installation
 
 `pnpm install @chiuzon/svelteweb3`
 
