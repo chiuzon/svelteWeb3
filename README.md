@@ -7,7 +7,7 @@ After 0.3.0 version we don't do any polyfills for the `web3-react` connectors, t
 
 For some connectors you might be required to disable `ssr`
 
-### Projects using `svelteWeb3`
+## Projects using `svelteWeb3`
 
 `Open a PR to add your project to the list!`
 
