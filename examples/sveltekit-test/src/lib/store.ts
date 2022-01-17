@@ -1,4 +1,4 @@
-import {createWeb3Store} from "@chiuzon/svelteweb3"
+import {createWeb3Store} from "@chiuzon/svelteweb3/package"
 import {ethers} from "ethers"
 
 export const web3Store = createWeb3Store((provider) => {
